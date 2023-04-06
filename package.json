@@ -1,0 +1,17 @@
+{
+	"name": "graphs",
+	"version": "1.0.0",
+	"description": "Library with graph traversal algorithms",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"run": "npm run build && node dist/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Jáchym Kohout",
+	"license": "GPL-3.0",
+	"devDependencies": {
+		"typescript": "^5.0.3"
+	}
+}
