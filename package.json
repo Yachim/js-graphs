@@ -4,9 +4,10 @@
 	"description": "Library with graph traversal algorithms",
 	"main": "index.js",
 	"type": "module",
+	"files": "lib/**/*",
 	"scripts": {
 		"build": "tsc",
-		"run": "npm run build && node dist/index.js",
+		"run": "ts-node --esm src/index.ts",
 		"test": "jest"
 	},
 	"author": "Jáchym Kohout",
