@@ -1,22 +1,37 @@
-// row label - from; col label - to
-// 
-// let row = i; let col = j
-// m[i][j] = 1; => there is a connection from i to j
-// m[i][j] = 0; => there is not a connection from i to j
-export type AdjacencyMatrix = number[][];
+export type Node = number | string;
+export type GraphType = "undirected" | "directed";
 
-type Node = number | string;
-type GraphType = "undirected" | "directed";
+export type AdjacencyDict = {
+	// connection from
+	[key in Node]: {
+		// connection to
+		[key in Node]: number
+	}
+};
 
-export type Graph<T extends Node> = {
-	nodes: T[],
-	adjacencyMatrix: AdjacencyMatrix,
+export type Graph = {
+	adjacencyDict: AdjacencyDict,
 	type: GraphType
+};
+
+// all values initialized at zero (no connection)
+function createBlankAdjacencyDict(nodes: Node[]): AdjacencyDict {
+	// all connections from one to all nodes
+	const toConns: AdjacencyDict[Node] = {};
+	nodes.forEach((node) => {
+		toConns[node] = 0;
+	});
+
+	const result: AdjacencyDict = {};
+	nodes.forEach((node) => {
+		result[node] = { ...toConns };
+	});
+
+	return result;
 }
 
-function createAdjacencyMatrixUndirected<T extends Node>(nodes: T[], connections: [T, T][]): AdjacencyMatrix {
-	// initialize a 2d n*n list filled with 0 where n is the number of nodes
-	const result: AdjacencyMatrix = Array(nodes.length).fill(0).map(() => Array(nodes.length).fill(0));
+function createAdjacencyDictUndirected(nodes: Node[], connections: [Node, Node][]): AdjacencyDict {
+	const result: AdjacencyDict = createBlankAdjacencyDict(nodes);
 
 	connections.forEach(([from, to]) => {
 		const fromIndex = nodes.indexOf(from);
@@ -24,15 +39,13 @@ function createAdjacencyMatrixUndirected<T extends Node>(nodes: T[], connections
 
 		result[fromIndex][toIndex] = 1;
 		result[toIndex][fromIndex] = 1;
-		console.log(from, to, result);
 	})
 
 	return result;
 }
 
-function createAdjacencyMatrixDirected<T extends Node>(nodes: T[], connections: [T, T][]): AdjacencyMatrix {
-	// initialize a 2d n*n list filled with 0 where n is the number of nodes
-	const result: AdjacencyMatrix = Array(nodes.length).fill(0).map(() => Array(nodes.length).fill(0));
+function createAdjacencyDictDirected(nodes: Node[], connections: [Node, Node][]): AdjacencyDict {
+	const result: AdjacencyDict = createBlankAdjacencyDict(nodes);
 
 	connections.forEach(([from, to]) => {
 		const fromIndex = nodes.indexOf(from);
@@ -45,23 +58,23 @@ function createAdjacencyMatrixDirected<T extends Node>(nodes: T[], connections: 
 }
 
 // connection: [from, to]
-export function createGraph<T extends Node>(nodes: T[], connections: [T, T][], type: GraphType): Graph<T> {
+export function createGraph<T extends Node>(nodes: T[], connections: [T, T][], type: GraphType): Graph {
 	if (new Set(nodes).size !== nodes.length) {
 		throw new Error("Nodes must be unique");
 	}
 
-	const graph: Graph<T> = {
-		nodes,
-		adjacencyMatrix: [],
+	let adjacencyDict = type === "undirected" ?
+		createAdjacencyDictUndirected(nodes, connections) :
+		createAdjacencyDictDirected(nodes, connections);
+
+	return {
+		adjacencyDict,
 		type
 	};
-
-	if (type === "undirected") {
-		graph.adjacencyMatrix = createAdjacencyMatrixUndirected(nodes, connections);
-	}
-	else {
-		graph.adjacencyMatrix = createAdjacencyMatrixDirected(nodes, connections);
-	}
-
-	return graph;
 }
+
+export const testingVars = {
+	createBlankAdjacencyDict,
+	createAdjacencyDictUndirected,
+	createAdjacencyDictDirected
+};
