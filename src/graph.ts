@@ -1,11 +1,10 @@
-export type Node = number | string;
 export type GraphType = "undirected" | "directed";
 
 export type AdjacencyDict = {
 	// connection from
-	[key in Node]: {
+	[key: string]: {
 		// connection to
-		[key in Node]: number
+		[key: string]: number
 	}
 };
 
@@ -15,9 +14,9 @@ export type Graph = {
 };
 
 // all values initialized at zero (no connection)
-function createBlankAdjacencyDict(nodes: Node[]): AdjacencyDict {
+function createBlankAdjacencyDict(nodes: string[]): AdjacencyDict {
 	// all connections from one to all nodes
-	const toConns: AdjacencyDict[Node] = {};
+	const toConns: AdjacencyDict[string] = {};
 	nodes.forEach((node) => {
 		toConns[node] = 0;
 	});
@@ -30,7 +29,7 @@ function createBlankAdjacencyDict(nodes: Node[]): AdjacencyDict {
 	return result;
 }
 
-function createAdjacencyDictUndirected(nodes: Node[], connections: [Node, Node][]): AdjacencyDict {
+function createAdjacencyDictUndirected(nodes: string[], connections: [string, string][]): AdjacencyDict {
 	const result: AdjacencyDict = createBlankAdjacencyDict(nodes);
 
 	connections.forEach(([from, to]) => {
@@ -44,7 +43,7 @@ function createAdjacencyDictUndirected(nodes: Node[], connections: [Node, Node][
 	return result;
 }
 
-function createAdjacencyDictDirected(nodes: Node[], connections: [Node, Node][]): AdjacencyDict {
+function createAdjacencyDictDirected(nodes: string[], connections: [string, string][]): AdjacencyDict {
 	const result: AdjacencyDict = createBlankAdjacencyDict(nodes);
 
 	connections.forEach(([from, to]) => {
@@ -58,7 +57,7 @@ function createAdjacencyDictDirected(nodes: Node[], connections: [Node, Node][])
 }
 
 // connection: [from, to]
-export function createGraph<T extends Node>(nodes: T[], connections: [T, T][], type: GraphType): Graph {
+export function createGraph(nodes: string[], connections: [string, string][], type: GraphType): Graph {
 	if (new Set(nodes).size !== nodes.length) {
 		throw new Error("Nodes must be unique");
 	}

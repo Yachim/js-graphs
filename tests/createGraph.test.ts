@@ -4,7 +4,7 @@ import { testingVars } from "../src/graph"
 let { createAdjacencyDictDirected, createBlankAdjacencyDict, createAdjacencyDictUndirected } = testingVars;
 
 test("creates blank adjacency dict", () => {
-	let dict = createBlankAdjacencyDict([0, 1, 2, 3, 4]);
+	let dict = createBlankAdjacencyDict(["0", "1", "2", "3", "4"]);
 
 	let expected = {
 		0: {
@@ -49,14 +49,14 @@ test("creates blank adjacency dict", () => {
 
 // example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates undirected adjacency dict", () => {
-	let dict = createAdjacencyDictUndirected([0, 1, 2, 3, 4], [
-		[0, 1],
-		[0, 4],
-		[1, 2],
-		[1, 3],
-		[1, 4],
-		[2, 3],
-		[3, 4]
+	let dict = createAdjacencyDictUndirected(["0", "1", "2", "3", "4"], [
+		["0", "1"],
+		["0", "4"],
+		["1", "2"],
+		["1", "3"],
+		["1", "4"],
+		["2", "3"],
+		["3", "4"]
 	]);
 
 	let expected = {
@@ -102,18 +102,18 @@ test("creates undirected adjacency dict", () => {
 
 // modified example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates directed adjacency dict", () => {
-	let dict = createAdjacencyDictDirected([0, 1, 2, 3, 4], [
-		[0, 1],
-		[0, 4],
-		[1, 0],
-		[1, 2],
-		[1, 3],
-		[1, 4],
-		[2, 1],
-		[2, 2],
-		[2, 3],
-		[3, 2],
-		[3, 4]
+	let dict = createAdjacencyDictDirected(["0", "1", "2", "3", "4"], [
+		["0", "1"],
+		["0", "4"],
+		["1", "0"],
+		["1", "2"],
+		["1", "3"],
+		["1", "4"],
+		["2", "1"],
+		["2", "2"],
+		["2", "3"],
+		["3", "2"],
+		["3", "4"]
 	]);
 
 	let expected = {
