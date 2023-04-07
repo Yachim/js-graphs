@@ -1,3 +1,3 @@
-import { createAdjacencyMatrix, type AdjacencyMatrix } from "./adjacencyMatrix.js";
+import { createGraph, type Graph } from "./graph.js";
 
-export { createAdjacencyMatrix, type AdjacencyMatrix };
+export { createGraph, type Graph };

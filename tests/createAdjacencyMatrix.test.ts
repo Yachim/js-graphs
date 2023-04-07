@@ -1,9 +1,9 @@
 import { expect, test } from "@jest/globals";
-import { createAdjacencyMatrix } from "../src/adjacencyMatrix";
+import { createGraph } from "../src/graph";
 
 // example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates undirected graph matrix", () => {
-	let matrix = createAdjacencyMatrix([0, 1, 2, 3, 4], [
+	let graph = createGraph([0, 1, 2, 3, 4], [
 		[0, 1],
 		[0, 4],
 		[1, 2],
@@ -12,7 +12,6 @@ test("creates undirected graph matrix", () => {
 		[2, 3],
 		[3, 4]
 	], "undirected");
-	console.log(matrix);
 
 	let expected = [
 		[0, 1, 0, 0, 1],
@@ -22,12 +21,12 @@ test("creates undirected graph matrix", () => {
 		[1, 1, 0, 1, 0]
 	];
 
-	expect(matrix).toEqual(expected);
+	expect(graph.adjacencyMatrix).toEqual(expected);
 })
 
 // modified example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates directed graph matrix", () => {
-	let matrix = createAdjacencyMatrix([0, 1, 2, 3, 4], [
+	let graph = createGraph([0, 1, 2, 3, 4], [
 		[0, 1],
 		[0, 4],
 		[1, 0],
@@ -40,7 +39,6 @@ test("creates directed graph matrix", () => {
 		[3, 2],
 		[3, 4]
 	], "directed");
-	console.log(matrix);
 
 	let expected = [
 		[0, 1, 0, 0, 1],
@@ -50,5 +48,5 @@ test("creates directed graph matrix", () => {
 		[0, 0, 0, 0, 0]
 	];
 
-	expect(matrix).toEqual(expected);
+	expect(graph.adjacencyMatrix).toEqual(expected);
 })

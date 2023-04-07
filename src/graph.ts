@@ -5,7 +5,16 @@
 // m[i][j] = 0; => there is not a connection from i to j
 export type AdjacencyMatrix = number[][];
 
-function createAdjacencyMatrixUndirected<T extends number | string>(nodes: T[], connections: [T, T][]): AdjacencyMatrix {
+type Node = number | string;
+type GraphType = "undirected" | "directed";
+
+export type Graph<T extends Node> = {
+	nodes: T[],
+	adjacencyMatrix: AdjacencyMatrix,
+	type: GraphType
+}
+
+function createAdjacencyMatrixUndirected<T extends Node>(nodes: T[], connections: [T, T][]): AdjacencyMatrix {
 	// initialize a 2d n*n list filled with 0 where n is the number of nodes
 	const result: AdjacencyMatrix = Array(nodes.length).fill(0).map(() => Array(nodes.length).fill(0));
 
@@ -21,7 +30,7 @@ function createAdjacencyMatrixUndirected<T extends number | string>(nodes: T[], 
 	return result;
 }
 
-function createAdjacencyMatrixDirected<T extends number | string>(nodes: T[], connections: [T, T][]): AdjacencyMatrix {
+function createAdjacencyMatrixDirected<T extends Node>(nodes: T[], connections: [T, T][]): AdjacencyMatrix {
 	// initialize a 2d n*n list filled with 0 where n is the number of nodes
 	const result: AdjacencyMatrix = Array(nodes.length).fill(0).map(() => Array(nodes.length).fill(0));
 
@@ -36,15 +45,23 @@ function createAdjacencyMatrixDirected<T extends number | string>(nodes: T[], co
 }
 
 // connection: [from, to]
-export function createAdjacencyMatrix<T extends number | string>(nodes: T[], connections: [T, T][], type: "directed" | "undirected"): AdjacencyMatrix {
+export function createGraph<T extends Node>(nodes: T[], connections: [T, T][], type: GraphType): Graph<T> {
 	if (new Set(nodes).size !== nodes.length) {
 		throw new Error("Nodes must be unique");
 	}
 
+	const graph: Graph<T> = {
+		nodes,
+		adjacencyMatrix: [],
+		type
+	};
+
 	if (type === "undirected") {
-		return createAdjacencyMatrixUndirected(nodes, connections);
+		graph.adjacencyMatrix = createAdjacencyMatrixUndirected(nodes, connections);
 	}
 	else {
-		return createAdjacencyMatrixDirected(nodes, connections);
+		graph.adjacencyMatrix = createAdjacencyMatrixDirected(nodes, connections);
 	}
+
+	return graph;
 }
