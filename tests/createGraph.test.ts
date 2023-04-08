@@ -45,7 +45,7 @@ test("creates blank adjacency dict", () => {
 	};
 
 	expect(dict).toEqual(expected);
-})
+});
 
 // example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates undirected adjacency dict", () => {
@@ -98,7 +98,7 @@ test("creates undirected adjacency dict", () => {
 	};
 
 	expect(dict).toEqual(expected);
-})
+});
 
 // modified example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates directed adjacency dict", () => {
@@ -155,4 +155,4 @@ test("creates directed adjacency dict", () => {
 	}
 
 	expect(dict).toEqual(expected);
-})
+});
