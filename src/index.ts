@@ -1,4 +1,4 @@
-import { createGraph, Graph, GraphType, AdjacencyDict } from "./graph.js";
+import { createGraph, Graph, } from "./graph.js";
 import { dijkstra } from "./dijkstra.js"
 
-export { createGraph, Graph, GraphType, AdjacencyDict, dijkstra };
+export { createGraph, Graph, dijkstra };

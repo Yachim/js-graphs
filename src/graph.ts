@@ -1,6 +1,6 @@
-export type GraphType = "undirected" | "directed";
+type GraphType = "undirected" | "directed";
 
-export type AdjacencyDict = {
+type AdjacencyDict = {
 	// connection from
 	[key: string]: {
 		// connection to
