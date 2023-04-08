@@ -8,6 +8,9 @@ type AdjacencyDict = {
 	}
 };
 
+// from to with optional weight (1 if not provided)
+type Connection = [string, string, number?];
+
 export type Graph = {
 	adjacencyDict: AdjacencyDict,
 	type: GraphType
@@ -29,35 +32,43 @@ function createBlankAdjacencyDict(nodes: string[]): AdjacencyDict {
 	return result;
 }
 
-function createAdjacencyDictUndirected(nodes: string[], connections: [string, string][]): AdjacencyDict {
+function createAdjacencyDictUndirected(nodes: string[], connections: Connection[]): AdjacencyDict {
 	const result: AdjacencyDict = createBlankAdjacencyDict(nodes);
 
-	connections.forEach(([from, to]) => {
+	connections.forEach(([from, to, weight]) => {
 		const fromIndex = nodes.indexOf(from);
 		const toIndex = nodes.indexOf(to);
 
-		result[fromIndex][toIndex] = 1;
-		result[toIndex][fromIndex] = 1;
+		if (weight === undefined) {
+			weight = 1;
+		}
+
+		result[fromIndex][toIndex] = weight;
+		result[toIndex][fromIndex] = weight;
 	})
 
 	return result;
 }
 
-function createAdjacencyDictDirected(nodes: string[], connections: [string, string][]): AdjacencyDict {
+function createAdjacencyDictDirected(nodes: string[], connections: Connection[]): AdjacencyDict {
 	const result: AdjacencyDict = createBlankAdjacencyDict(nodes);
 
-	connections.forEach(([from, to]) => {
+	connections.forEach(([from, to, weight]) => {
 		const fromIndex = nodes.indexOf(from);
 		const toIndex = nodes.indexOf(to);
 
-		result[fromIndex][toIndex] = 1;
+		if (weight === undefined) {
+			weight = 1;
+		}
+
+		result[fromIndex][toIndex] = weight;
 	})
 
 	return result;
 }
 
 // connection: [from, to]
-export function createGraph(nodes: string[], connections: [string, string][], type: GraphType): Graph {
+export function createGraph(nodes: string[], connections: Connection[], type: GraphType): Graph {
 	if (new Set(nodes).size !== nodes.length) {
 		throw new Error("Nodes must be unique");
 	}

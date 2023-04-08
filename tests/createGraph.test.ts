@@ -48,6 +48,59 @@ test("creates blank adjacency dict", () => {
 });
 
 // example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
+test("creates undirected adjacency dict with weights", () => {
+	let dict = createAdjacencyDictUndirected(["0", "1", "2", "3", "4"], [
+		["0", "1", 2],
+		["0", "4"],
+		["1", "2", 1],
+		["1", "3"],
+		["1", "4", 3],
+		["2", "3", 7],
+		["3", "4"]
+	]);
+
+	let expected = {
+		0: {
+			0: NaN,
+			1: 2,
+			2: NaN,
+			3: NaN,
+			4: 1
+		},
+		1: {
+			0: 2,
+			1: NaN,
+			2: 1,
+			3: 1,
+			4: 3
+		},
+		2: {
+			0: NaN,
+			1: 1,
+			2: NaN,
+			3: 7,
+			4: NaN
+		},
+		3: {
+			0: NaN,
+			1: 1,
+			2: 7,
+			3: NaN,
+			4: 1
+		},
+		4: {
+			0: 1,
+			1: 3,
+			2: NaN,
+			3: 1,
+			4: NaN
+		}
+	};
+
+	expect(dict).toEqual(expected);
+})
+
+// example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
 test("creates undirected adjacency dict", () => {
 	let dict = createAdjacencyDictUndirected(["0", "1", "2", "3", "4"], [
 		["0", "1"],
@@ -96,6 +149,63 @@ test("creates undirected adjacency dict", () => {
 			4: NaN
 		}
 	};
+
+	expect(dict).toEqual(expected);
+});
+
+// modified example from https://www.geeksforgeeks.org/graph-and-its-representations/ image
+test("creates directed adjacency dict with weights", () => {
+	let dict = createAdjacencyDictDirected(["0", "1", "2", "3", "4"], [
+		["0", "1", 2],
+		["0", "4", 4],
+		["1", "0", 9],
+		["1", "2"],
+		["1", "3"],
+		["1", "4", 3],
+		["2", "1"],
+		["2", "2", 5],
+		["2", "3"],
+		["3", "2"],
+		["3", "4"]
+	]);
+
+	let expected = {
+		0: {
+			0: NaN,
+			1: 2,
+			2: NaN,
+			3: NaN,
+			4: 4
+		},
+		1: {
+			0: 9,
+			1: NaN,
+			2: 1,
+			3: 1,
+			4: 3
+		},
+		2: {
+			0: NaN,
+			1: 1,
+			2: 5,
+			3: 1,
+			4: NaN
+		},
+		3: {
+			0: NaN,
+			1: NaN,
+			2: 1,
+			3: NaN,
+			4: 1
+		},
+		4: {
+			0: NaN,
+			1: NaN,
+			2: NaN,
+			3: NaN,
+			4: NaN
+		}
+	}
 
 	expect(dict).toEqual(expected);
 });
