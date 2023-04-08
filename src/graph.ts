@@ -18,7 +18,7 @@ function createBlankAdjacencyDict(nodes: string[]): AdjacencyDict {
 	// all connections from one to all nodes
 	const toConns: AdjacencyDict[string] = {};
 	nodes.forEach((node) => {
-		toConns[node] = 0;
+		toConns[node] = NaN;
 	});
 
 	const result: AdjacencyDict = {};
